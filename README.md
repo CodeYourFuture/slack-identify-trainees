@@ -1,1 +1,1 @@
-# slack-identify-trainees
+# Custom Slack App for the Identify Trainees tender
