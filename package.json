@@ -1,0 +1,12 @@
+{
+  "name": "slack-identify-trainees",
+  "version": "1.0.0",
+  "description": "- Node.js\r - Slack JavaScript SDKs\r - Jest\r - Netlify",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
