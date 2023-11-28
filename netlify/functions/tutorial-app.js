@@ -10,6 +10,18 @@ const app = new App({
     receiver: awsLambdaReceiver,
 });
 
+app.event('team_join', async ({ event, client }) => {
+    try {
+        await client.chat.postMessage({
+            channel: event.user.id,
+            text: 'Welcome! Please make sure to set your "Is Trainee" profile field.',
+        });
+    } catch (error) {
+        console.error('Error sending welcome message:', error);
+    }
+});
+
+
 app.message(async ({ message, client }) => {
     // Check if the message is from a user in a channel (not a bot message)
     if (message.subtype !== 'bot_message' && message.user) {
