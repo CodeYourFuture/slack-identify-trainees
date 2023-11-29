@@ -7,7 +7,7 @@ const awsLambdaReceiver = new AwsLambdaReceiver({
 
 const app = new App({
     token: process.env.SLACK_BOT_TOKEN,
-    receiver: awsLambdaReceiver,
+    receiver: awsLambdaReceiver
 });
 
 app.event('team_join', async ({ event, client }) => {
