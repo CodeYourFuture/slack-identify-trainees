@@ -1,22 +1,17 @@
-const { createHmac } = require('node:crypto');
-const { handler } = require('./netlify/functions/slack-app');
+require('dotenv').config();
+const { ServerlessTester, events } = require('@slack-wrench/fixtures');
+const { App, ExpressReceiver } = require('@slack/bolt');
 
-async function sendRequest() {
-    const secret = 'my-secret';
-    const hmac = createHmac("sha256", secret);
-    const signature = hmac.digest("hex");
+const token = process.env.SLACK_BOT_TOKEN;
+const signingSecret = process.env.SLACK_SIGNING_SECRET;
 
-    const body = JSON.stringify({
-        type: 'message'
+const receiver = new ExpressReceiver({ signingSecret });
+const app = new App({ receiver, token });
+const handler = new ServerlessTester(receiver.app, signingSecret);
+
+describe('slack app', () => {
+    it('returns 200 after receiving message event', async () => {
+        const result = await handler.sendSlackEvent(events.message('Hello World'));
+        expect(result.statusCode).toBe(200);
     });
-
-    const headers = {
-        'content-type': 'application/json',
-        'x-slack-signature': `v0=${signature}`
-    }
-
-    const res = await handler({ body, headers });
-    console.log(res);
-}
-
-sendRequest();
+});

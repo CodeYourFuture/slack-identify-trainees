@@ -32,7 +32,7 @@ app.message(async ({ message, client }) => {
             });
 
             // Check if the 'Is Trainee' field is empty
-            if (!userProfile.profile.fields['Xf065B6QU58A']) {
+            if (!userProfile.profile.fields['Xf067WCKHDB6']) {
                 // Send a message to the user about the missing profile field
                 await client.chat.postMessage({
                     channel: message.user,
