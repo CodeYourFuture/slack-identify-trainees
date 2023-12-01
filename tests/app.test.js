@@ -1,17 +1,7 @@
 import crypto from 'crypto';
-import { setupServer } from 'msw/node'
-import { http, HttpResponse } from 'msw';
-import { handler } from './netlify/functions/slack-app.js';
-import teamJoinRequest from './requests/team_join.json' assert { type: 'json' };
-
-const server = setupServer(
-    http.post('https://slack.com/api/chat.postMessage', ({ request, params, cookies }) => {
-        console.log(request);
-        return HttpResponse.json({ ok: true });
-    }),
-)
-
-server.listen();
+import { server } from './server.js';
+import { handler } from '../netlify/functions/slack-app.js';
+import teamJoinRequest from '../requests/team_join.json' assert { type: 'json' };
 
 async function sendRequest() {
     const result = await handler(createSlackRequest(teamJoinRequest));
@@ -19,8 +9,6 @@ async function sendRequest() {
 }
 
 sendRequest();
-
-server.close();
 
 
 // describe('slack app', () => {
