@@ -1,5 +1,6 @@
-require('dotenv').config();
-const { App, AwsLambdaReceiver } = require('@slack/bolt');
+import 'dotenv/config';
+import pkg from '@slack/bolt';
+const { App, AwsLambdaReceiver } = pkg;
 
 const awsLambdaReceiver = new AwsLambdaReceiver({
     signingSecret: process.env.SLACK_SIGNING_SECRET,
@@ -46,7 +47,7 @@ app.message(async ({ message, client }) => {
 });
 
 
-module.exports.handler = async (event, context, callback) => {
+export const handler = async (event, context, callback) => {
     const handler = await awsLambdaReceiver.start();
     return handler(event, context, callback);
 }
