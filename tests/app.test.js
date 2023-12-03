@@ -1,7 +1,19 @@
 import crypto from 'crypto';
 import { server } from './server.js';
-import { handler } from '../netlify/functions/slack-app.js';
+import pkg from '@slack/bolt'; const { App, AwsLambdaReceiver } = pkg;
+import { boltApp, initApp, handler } from '../netlify/functions/slack-app.js';
 import teamJoinRequest from '../requests/team_join.json' assert { type: 'json' };
+
+boltApp.awsLambdaReceiver = new AwsLambdaReceiver({
+    signingSecret: 'my-secret',
+});
+
+boltApp.app = new App({
+    token: 'SLACK_TOKEN',
+    receiver: boltApp.awsLambdaReceiver
+});
+
+initApp(boltApp);
 
 async function sendRequest() {
     const result = await handler(createSlackRequest(teamJoinRequest));
