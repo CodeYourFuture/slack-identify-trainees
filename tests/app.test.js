@@ -28,10 +28,10 @@ initApp(boltApp);
 
 describe('slack app', () => {
     it('returns 200 after receiving message event', async () => {
-        server.use(...handlers.teamJoin);
+        // server.use(...handlers.teamJoin);
 
         const result = await handler(createSlackRequest(teamJoinRequest));
-        expect(rest.statusCode).toBe(200);
+        expect(result.statusCode).toBe(200);
         expect(sentRequest.payload.text).toBe('Welcome! Please make sure to set your "Is Trainee" profile field.');
     });
 });

@@ -15,7 +15,7 @@ export const handlers = {
     ]
 };
 
-export const server = setupServer();
+export const server = setupServer(...handlers.teamJoin);
 
 beforeAll(() => {
     server.listen({
