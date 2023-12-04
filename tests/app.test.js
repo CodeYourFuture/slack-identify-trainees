@@ -1,5 +1,5 @@
 import crypto from 'crypto';
-import { server } from './server.js';
+import { server, sentRequest, handlers } from './server.js';
 import pkg from '@slack/bolt'; const { App, AwsLambdaReceiver } = pkg;
 import { boltApp, initApp, handler } from '../netlify/functions/slack-app.js';
 import teamJoinRequest from '../requests/team_join.json' assert { type: 'json' };
@@ -15,21 +15,26 @@ boltApp.app = new App({
 
 initApp(boltApp);
 
-async function sendRequest() {
-    const result = await handler(createSlackRequest(teamJoinRequest));
-    console.log(result);
-}
+// async function sendRequest() {
+//     server.use(...handlers.teamJoin);
 
-sendRequest();
+//     const result = await handler(createSlackRequest(teamJoinRequest));
+//     console.log(result);
+//     console.log(sentRequest.payload);
+// }
+
+// sendRequest();
 
 
-// describe('slack app', () => {
-//     it('returns 200 after receiving message event', async () => {
-//         const result = await handler(createSlackRequest({ 'type': 'message' }));
-//         console.log(result);
-//         // expect(result.statusCode).toBe(200);
-//     });
-// });
+describe('slack app', () => {
+    it('returns 200 after receiving message event', async () => {
+        server.use(...handlers.teamJoin);
+
+        const result = await handler(createSlackRequest(teamJoinRequest));
+        expect(rest.statusCode).toBe(200);
+        expect(sentRequest.payload.text).toBe('Welcome! Please make sure to set your "Is Trainee" profile field.');
+    });
+});
 
 function createSlackRequest(data, path = '/slack/events') {
     const body = JSON.stringify(data);
