@@ -12,6 +12,17 @@ export const handlers = {
             sentRequest.payload = await getPayload(request);
             return HttpResponse.json({ ok: 'true' });
         })
+    ],
+    messageFieldUnset: [
+        http.post('https://slack.com/api/users.profile.get', ({ request }) => {
+            return HttpResponse.json({
+                ok: true,
+                profile: {
+                    display_name: 'Gary',
+                    fields: {}
+                }
+            });
+        })
     ]
 };
 
