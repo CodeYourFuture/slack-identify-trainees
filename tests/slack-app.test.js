@@ -16,6 +16,15 @@ boltApp.app = new App({
 
 initApp(boltApp);
 
+beforeEach(() => {
+    server.resetHandlers();
+    delete sentRequest.payload;
+});
+
+afterAll(() => {
+    server.close();
+});
+
 describe('slack app', () => {
     it('sends a message when a user joins the workspace', async () => {
         const result = await handler(createSlackRequest(teamJoinRequest));
@@ -29,6 +38,14 @@ describe('slack app', () => {
         const result = await handler(createSlackRequest(messageRequest));
         expect(result.statusCode).toBe(200);
         expect(sentRequest.payload.text).toBe('Please make sure to set your "Is Trainee" profile field.');
+    });
+
+    it('does not send a message when a user posts a message and field is set', async () => {
+        server.use(...handlers.messageFieldSet);
+
+        const result = await handler(createSlackRequest(messageRequest));
+        expect(result.statusCode).toBe(200);
+        expect(sentRequest).not.toHaveProperty('payload');
     });
 });
 

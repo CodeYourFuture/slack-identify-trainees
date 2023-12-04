@@ -23,20 +23,25 @@ export const handlers = {
                 }
             });
         })
+    ],
+    messageFieldSet: [
+        http.post('https://slack.com/api/users.profile.get', ({ request }) => {
+            return HttpResponse.json({
+                ok: true,
+                profile: {
+                    display_name: 'Gary',
+                    fields: {
+                        'Xf067WCKHDB6': 'Yes'
+                    }
+                }
+            });
+        })
     ]
 };
 
 export const server = setupServer(...handlers.teamJoin);
 
 server.listen();
-
-beforeEach(() => {
-    server.resetHandlers();
-});
-
-afterAll(() => {
-    server.close();
-});
 
 async function getPayload(request) {
     const entries = new URLSearchParams(await request.text()).entries();
