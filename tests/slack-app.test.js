@@ -29,7 +29,7 @@ describe('slack app', () => {
     it('sends a message when a user joins the workspace', async () => {
         const result = await handler(createSlackRequest(teamJoinRequest));
         expect(result.statusCode).toBe(200);
-        expect(sentRequest.payload.text).toBe('Welcome! Please make sure to set your "Is Trainee" profile field.');
+        expect(sentRequest.payload.text).toBe('Welcome! Please make sure to set your "Is/Was Trainee" profile field.');
     });
 
     it('sends a message when a user posts a message in a channel and they have not set field', async () => {
@@ -37,7 +37,7 @@ describe('slack app', () => {
 
         const result = await handler(createSlackRequest(messageRequest));
         expect(result.statusCode).toBe(200);
-        expect(sentRequest.payload.text).toBe('Please make sure to set your "Is Trainee" profile field.');
+        expect(sentRequest.payload.text).toBe('Please make sure to set your "Is/Was Trainee" profile field.');
     });
 
     it('does not send a message when a user posts a message and field is set', async () => {
