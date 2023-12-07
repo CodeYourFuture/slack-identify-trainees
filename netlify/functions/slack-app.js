@@ -18,10 +18,10 @@ export function initApp(boltApp) {
         try {
             await client.chat.postMessage({
                 channel: event.user.id,
-                text: 'Welcome! Please make sure to set your "Is/Was Trainee" profile field.',
+                text: 'Welcome! Please make sure to set your "Am/Was a CYF Trainee" profile field.',
             });
         } catch (error) {
-            console.error('Error sending welcome message:', error);
+            console.error('Welcome message failed:', error);
         }
     });
 
@@ -34,16 +34,16 @@ export function initApp(boltApp) {
                     user: message.user,
                 });
 
-                // Check if the 'Is/Was Trainee' field is empty
+                // Check if the 'Am/Was a CYF Trainee' field is empty
                 if (!userProfile.profile.fields['Xf067WCKHDB6']) {
                     // Send a message to the user about the missing profile field
                     await client.chat.postMessage({
                         channel: message.user,
-                        text: 'Please make sure to set your "Is/Was Trainee" profile field.',
+                        text: 'Please make sure to set your "Am/Was a CYF Trainee" profile field.',
                     });
                 }
             } catch (error) {
-                console.error('Error checking user profile:', error);
+                console.error('Profile check or send message failed:', error);
             }
         }
     });
