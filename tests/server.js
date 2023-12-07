@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import { setupServer } from 'msw/node'
 import { http, HttpResponse } from 'msw';
 
@@ -31,7 +32,7 @@ export const handlers = {
                 profile: {
                     display_name: 'Gary',
                     fields: {
-                        'Xf067WCKHDB6': 'Yes'
+                        [process.env.CUSTOM_TRAINEE_FIELD]: 'Yes'
                     }
                 }
             });

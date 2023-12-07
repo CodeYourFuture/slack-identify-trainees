@@ -35,7 +35,7 @@ export function initApp(boltApp) {
                 });
 
                 // Check if the 'Am/Was a CYF Trainee' field is empty
-                if (!userProfile.profile.fields['Xf067WCKHDB6']) {
+                if (!userProfile.profile.fields[process.env.CUSTOM_TRAINEE_FIELD]) {
                     // Send a message to the user about the missing profile field
                     await client.chat.postMessage({
                         channel: message.user,
