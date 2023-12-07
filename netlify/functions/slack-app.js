@@ -43,7 +43,7 @@ export function initApp(boltApp) {
                     });
                 }
             } catch (error) {
-                console.error('Profile check or send message failed:', error);
+                console.error('Profile check or message failed:', error);
             }
         }
     });
