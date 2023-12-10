@@ -1,4 +1,4 @@
-# Custom Slack App for the Identify Trainees tender (Work In Progress)
+# Custom Slack App for the Identify Trainees tender
 
 ## What is this?
 A lot of Slack users don't set certain custom profile fields which show whether they are a trainee or used to be a trainee.
@@ -30,7 +30,8 @@ sequenceDiagram
 - Node.js
 - Slack JavaScript SDKs
 - Jest
+- MSW
 - Netlify
 
 ## Deployment
-- Will be a Netlify serverless function.
+- Will be a Netlify serverless function deployed to Netlify.
