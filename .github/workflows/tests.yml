@@ -25,3 +25,7 @@ jobs:
       
       - name: Run tests
         run: node --experimental-vm-modules node_modules/jest/bin/jest.js
+        env:
+          SLACK_BOT_TOKEN: 'slackToken'
+          SLACK_SIGNING_SECRET: 'slackSecret'
+          CUSTOM_TRAINEE_FIELD: ${{secrets.CUSTOM_TRAINEE_FIELD}}
