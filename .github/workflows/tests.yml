@@ -1,0 +1,27 @@
+name: Tests
+
+on:
+  workflow_dispatch:
+  pull_request:
+    types:
+      - opened
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18.x'
+          cache: 'npm'
+          cache-dependency-path: 'package-lock.json'
+
+      - name: Install packages
+        run: npm ci
+      
+      - name: Run tests
+        run: node --experimental-vm-modules node_modules/jest/bin/jest.js
