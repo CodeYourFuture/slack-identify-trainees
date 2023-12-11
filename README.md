@@ -2,8 +2,8 @@
 
 ## What is this?
 A lot of Slack users don't set certain custom profile fields which show whether they are a trainee or used to be a trainee.
-This Slack sends a message to users asking them to set the field when:
-- User joins the workspace.
+This Slack app sends a message to users asking them to set the field when:
+- A new user joins the workspace.
 - Every time a user posts in a channel that the app is installed to and their field is not set.
 
 ## Architecture
@@ -28,7 +28,7 @@ sequenceDiagram
 
 ## Tech Stack
 - Node.js
-- Slack JavaScript SDKs
+- Bolt JS
 - Jest
 - MSW
 - Netlify
