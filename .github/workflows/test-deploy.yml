@@ -51,8 +51,10 @@ jobs:
       - name: Install packages
         run: npm ci
       
-      - name: Deploy to Netlify
+      - name: Setup Netlify CLI
         run: "npm install --global netlify-cli"
+
+      - name: Deploy to Netlify
         run: "netlify deploy --dir . --prod true"
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
