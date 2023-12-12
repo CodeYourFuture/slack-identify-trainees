@@ -1,0 +1,61 @@
+name: 'Test & Deploy'
+
+on:
+  pull_request:
+    branches:
+      - "main"
+  push:
+    branches:
+      - "main"
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18.x'
+          cache: 'npm'
+          cache-dependency-path: 'package-lock.json'
+
+      - name: Install packages
+        run: npm ci
+      
+      - name: Run tests
+        run: node --experimental-vm-modules node_modules/jest/bin/jest.js
+        env:
+          SLACK_BOT_TOKEN: 'slackToken'
+          SLACK_SIGNING_SECRET: 'slackSecret'
+          CUSTOM_TRAINEE_FIELD: ${{secrets.CUSTOM_TRAINEE_FIELD}}
+
+  deploy:
+    needs:
+      - "tests"
+    if: "github.ref == 'refs/heads/main'"
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18.x'
+          cache: 'npm'
+          cache-dependency-path: 'package-lock.json'
+
+      - name: Install packages
+        run: npm ci
+      
+      - name: Setup Netlify CLI
+        run: "npm install --global netlify-cli"
+
+      - name: Deploy to Netlify
+        run: "netlify deploy --dir . --prod true"
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
